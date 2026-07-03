@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frenos Álvarez — El Vigía</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15171a;
+    --surface:#1d2024;
+    --surface-2:#24282e;
+    --steel:#3c424a;
+    --line:#2c3036;
+    --accent:#d1552c;
+    --accent-dim:#9c3f22;
+    --amber:#e0a23c;
+    --text:#f1ede4;
+    --text-dim:#a4aab2;
+    --text-faint:#6b7178;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+  section{position:relative;padding:100px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:'';width:22px;height:1px;background:var(--accent);display:inline-block;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;align-items:center;
+    padding:140px 0 100px;
+    background:
+      radial-gradient(ellipse 900px 600px at 82% 20%, rgba(209,85,44,0.14), transparent 60%),
+      var(--bg);
+    overflow:hidden;
+  }
+  .rotor{
+    position:absolute;
+    right:-220px;top:50%;transform:translateY(-50%);
+    width:820px;height:820px;
+    opacity:0.55;
+    z-index:0;
+    animation:spin 90s linear infinite;
+  }
+  @keyframes spin{ to{ transform:translateY(-50%) rotate(360deg); } }
+  .hero-inner{position:relative;z-index:1;max-width:640px;}
+  .hero h1{
+    font-size:clamp(34px,5.4vw,58px);
+    line-height:1.08;
+    margin-bottom:22px;
+    color:var(--text);
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--accent);
+  }
+  .hero p.sub{
+    font-size:17px;color:var(--text-dim);max-width:520px;margin-bottom:36px;
+  }
+  .proof-strip{
+    display:flex;flex-wrap:wrap;gap:0;
+    border:1px solid var(--line);
+    width:fit-content;
+  }
+  .proof-item{
+    padding:14px 22px;border-right:1px solid var(--line);
+  }
+  .proof-item:last-child{border-right:none;}
+  .proof-item .num{
+    font-family:'IBM Plex Mono', monospace;font-size:20px;font-weight:600;color:var(--accent);
+    display:block;
+  }
+  .proof-item .label{
+    font-size:11px;color:var(--text-faint);letter-spacing:0.05em;text-transform:uppercase;margin-top:2px;
+  }
+
+  /* ---------- GENERIC SECTION HEAD ---------- */
+  .section-head{max-width:680px;margin-bottom:56px;}
+  .section-head h2{font-size:clamp(26px,3.6vw,38px);color:var(--text);line-height:1.15;}
+  .section-head p{color:var(--text-dim);margin-top:16px;font-size:16px;}
+
+  /* ---------- DIAGNÓSTICO ---------- */
+  .pain-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .pain-card{background:var(--surface);padding:28px 30px;}
+  .pain-card .tag{
+    font-family:'IBM Plex Mono', monospace;font-size:12px;color:var(--accent);margin-bottom:10px;display:block;
+  }
+  .pain-card h3{
+    font-family:'IBM Plex Sans', sans-serif;font-weight:600;text-transform:none;
+    font-size:18px;color:var(--text);margin-bottom:8px;letter-spacing:0;
+  }
+  .pain-card p{color:var(--text-dim);font-size:15px;}
+  .closer{
+    margin-top:40px;padding-left:22px;border-left:2px solid var(--accent);
+    font-size:17px;color:var(--text);max-width:600px;font-style:italic;
+  }
+
+  /* ---------- BENCHMARK ---------- */
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);margin-bottom:44px;}
+  .stat{padding:34px 24px;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .value{font-family:'IBM Plex Mono', monospace;font-size:44px;font-weight:600;color:var(--amber);line-height:1;}
+  .stat .desc{margin-top:12px;font-size:13px;color:var(--text-dim);}
+  .bench-copy{max-width:640px;color:var(--text-dim);font-size:16px;}
+  .bench-copy strong{color:var(--text);font-weight:600;}
+
+  /* ---------- TRABAJO EN CURSO ---------- */
+  .work-grid{display:grid;grid-template-columns:1fr;gap:28px;}
+  @media(min-width:860px){ .work-grid{grid-template-columns:1.1fr 0.9fr;align-items:start;} }
+  .mock-card{
+    background:var(--surface);border:1px solid var(--line);padding:0;
+  }
+  .mock-head{
+    display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);
+    background:var(--surface-2);
+  }
+  .mock-dot{width:8px;height:8px;border-radius:50%;background:var(--text-faint);}
+  .mock-head span{font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);letter-spacing:0.05em;}
+  .mock-body{padding:22px 20px;}
+  .mock-body .biz{font-family:'Oswald',sans-serif;font-size:19px;color:var(--text);text-transform:none;margin-bottom:4px;}
+  .mock-body .stars{color:var(--amber);font-size:13px;margin-bottom:14px;font-family:'IBM Plex Mono', monospace;}
+  .mock-body .desc-label{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+  .mock-body .desc-text{
+    font-size:14.5px;color:var(--text-dim);line-height:1.6;
+    padding:14px 16px;background:var(--bg);border-left:2px solid var(--accent);
+  }
+  .checklist{list-style:none;}
+  .checklist li{
+    display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .n{
+    font-family:'IBM Plex Mono', monospace;color:var(--accent);font-size:13px;flex-shrink:0;padding-top:1px;
+  }
+  .checklist p{color:var(--text-dim);font-size:15px;}
+  .checklist strong{color:var(--text);font-weight:600;}
+
+  /* ---------- SISTEMA ---------- */
+  .system-block{max-width:700px;}
+  .system-block p{color:var(--text-dim);font-size:16px;margin-bottom:18px;}
+  .bio-line{
+    margin-top:38px;padding-top:28px;border-top:1px solid var(--line);
+    font-size:14px;color:var(--text-faint);
+  }
+  .bio-line strong{color:var(--text-dim);font-weight:500;}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    background:var(--surface);text-align:left;
+  }
+  .cta .wrap{max-width:640px;}
+  .cta h2{font-size:clamp(28px,4vw,42px);color:var(--text);margin-bottom:20px;line-height:1.15;}
+  .cta p{color:var(--text-dim);font-size:16px;margin-bottom:36px;}
+  .wa-btn{
+    display:inline-flex;align-items:center;gap:12px;
+    background:var(--accent);color:#15171a;
+    font-family:'IBM Plex Sans', sans-serif;font-weight:600;font-size:16px;
+    padding:16px 30px;text-decoration:none;
+    transition:background 0.2s ease, transform 0.2s ease;
+  }
+  .wa-btn:hover{background:var(--amber);transform:translateY(-2px);}
+  .wa-btn svg{width:20px;height:20px;fill:#15171a;}
+  .final-line{
+    margin-top:56px;padding-top:32px;border-top:1px solid var(--line);
+    font-family:'Oswald', sans-serif;font-size:clamp(20px,2.6vw,26px);
+    text-transform:none;color:var(--text);line-height:1.3;max-width:560px;
+  }
+  .final-line span{color:var(--accent);}
+
+  /* ---------- BUNDLE / ARRANQUE LOCAL ---------- */
+  .bundle-intro{max-width:660px;color:var(--text-dim);font-size:16px;margin-bottom:16px;}
+  .bundle-intro strong{color:var(--text);font-weight:600;}
+  .compare-note{
+    max-width:660px;font-size:14.5px;color:var(--text-faint);
+    padding:14px 18px;border:1px dashed var(--line);margin-bottom:52px;
+  }
+  .bundle-card{
+    background:var(--surface);border:1px solid var(--line);
+    max-width:460px;padding:32px 30px;margin-bottom:56px;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono', monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--accent-dim);padding:6px 12px;margin-bottom:22px;
+  }
+  .bundle-tag{font-family:'IBM Plex Mono', monospace;font-size:12px;color:var(--text-faint);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;}
+  .bundle-card h3{font-family:'Oswald',sans-serif;font-size:26px;color:var(--text);margin-bottom:14px;}
+  .bundle-card .desc{color:var(--text-dim);font-size:15px;margin-bottom:22px;}
+  .bundle-list{list-style:none;margin-bottom:26px;}
+  .bundle-list li{display:flex;gap:10px;padding:8px 0;color:var(--text-dim);font-size:15px;}
+  .bundle-list li::before{content:'✓';color:var(--accent);font-weight:600;flex-shrink:0;}
+  .price-block{border-top:1px solid var(--line);padding-top:22px;}
+  .price-label{font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
+  .price-old{color:var(--text-faint);text-decoration:line-through;font-size:16px;margin-right:10px;}
+  .price-now{font-family:'IBM Plex Mono', monospace;font-size:38px;font-weight:600;color:var(--text);}
+  .price-now .cur{font-size:16px;color:var(--text-dim);font-family:'IBM Plex Sans',sans-serif;margin-left:6px;}
+  .price-save{color:var(--accent);font-size:13px;margin-top:6px;}
+  .price-split{color:var(--text-faint);font-size:13px;margin-top:10px;}
+  .price-vat{color:var(--text-faint);font-size:12px;margin-top:2px;}
+
+  /* ---------- CALCULATOR ---------- */
+  .calc{background:var(--surface);border:1px solid var(--line);padding:32px 28px;margin-bottom:44px;}
+  .calc-head h3{font-family:'Oswald',sans-serif;font-size:20px;color:var(--text);text-transform:none;letter-spacing:0;margin-bottom:6px;}
+  .calc-head p{color:var(--text-dim);font-size:14.5px;margin-bottom:26px;}
+  .seg{display:flex;flex-wrap:wrap;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:22px;}
+  .seg button{
+    flex:1;min-width:130px;background:var(--bg);border:none;color:var(--text-dim);
+    font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:500;padding:12px 10px;cursor:pointer;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .seg button.active{background:var(--accent);color:#15171a;font-weight:600;}
+  .ads-row{display:none;align-items:center;gap:16px;margin-bottom:26px;}
+  .ads-row.show{display:flex;}
+  .ads-row label{font-size:13px;color:var(--text-dim);flex-shrink:0;font-family:'IBM Plex Mono', monospace;}
+  .ads-row input[type=range]{flex:1;accent-color:var(--accent);}
+  .ads-row .ads-val{font-family:'IBM Plex Mono', monospace;color:var(--amber);font-size:13px;width:78px;flex-shrink:0;text-align:right;}
+  .calc-results{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .result{background:var(--surface-2);padding:20px 18px;}
+  .result .val{font-family:'IBM Plex Mono', monospace;font-size:32px;font-weight:600;color:var(--amber);line-height:1;}
+  .result .lbl{font-size:12px;color:var(--text-dim);margin-top:8px;}
+  .calc-fine{font-size:12px;color:var(--text-faint);margin-top:18px;line-height:1.6;}
+  .calc-toggle{margin-top:18px;}
+  .calc-toggle summary{cursor:pointer;font-size:13px;color:var(--text-dim);}
+  .calc-toggle summary::marker{color:var(--accent);}
+  .calc-toggle p{font-size:13.5px;color:var(--text-dim);margin-top:10px;padding-left:2px;}
+
+  @media(max-width:600px){
+    .calc-results{grid-template-columns:1fr;}
+  }
+
+  footer{padding:36px 0;text-align:center;}
+  footer p{font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);letter-spacing:0.05em;}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media(max-width:600px){
+    section{padding:70px 0;}
+    .stat-row{grid-template-columns:1fr;}
+    .stat{border-right:none;border-bottom:1px solid var(--line);}
+    .stat:last-child{border-bottom:none;}
+    .rotor{opacity:0.25;width:520px;height:520px;right:-260px;}
+    .proof-strip{width:100%;}
+    .proof-item{flex:1;padding:12px 14px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .rotor{animation:none;}
+    .reveal{transition:none;opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <svg class="rotor" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="190" fill="none" stroke="#3c424a" stroke-width="1.5"/>
+    <circle cx="200" cy="200" r="150" fill="none" stroke="#3c424a" stroke-width="1"/>
+    <circle cx="200" cy="200" r="60" fill="none" stroke="#d1552c" stroke-width="2"/>
+    <circle cx="200" cy="200" r="14" fill="#d1552c" opacity="0.85"/>
+    <g stroke="#3c424a" stroke-width="10" stroke-linecap="round">
+      <line x1="200" y1="60" x2="200" y2="95"/>
+      <line x1="200" y1="340" x2="200" y2="305"/>
+      <line x1="60" y1="200" x2="95" y2="200"/>
+      <line x1="340" y1="200" x2="305" y2="200"/>
+      <line x1="97" y1="97" x2="121" y2="121"/>
+      <line x1="303" y1="303" x2="279" y2="279"/>
+      <line x1="303" y1="97" x2="279" y2="121"/>
+      <line x1="97" y1="303" x2="121" y2="279"/>
+    </g>
+    <g stroke="#2c3036" stroke-width="4">
+      <line x1="200" y1="150" x2="200" y2="250"/>
+      <line x1="150" y1="200" x2="250" y2="200"/>
+      <line x1="164" y1="164" x2="236" y2="236"/>
+      <line x1="236" y1="164" x2="164" y2="236"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="eyebrow">Zapopan, Jalisco — Taller de frenos y suspensión</div>
+      <h1>Pedro, tus clientes ya confían en ti. <em>Tu ficha de Google todavía no lo sabe.</em></h1>
+      <p class="sub">Reseña tras reseña, la gente dice lo mismo: trato directo, precios claros, piezas explicadas antes de cobrarlas. Eso es un activo que casi ningún taller de frenos en Zapopan tiene — y ahorita está atrapado donde casi nadie lo encuentra.</p>
+      <div class="proof-strip">
+        <div class="proof-item"><span class="num">4.7★</span><span class="label">Calificación</span></div>
+        <div class="proof-item"><span class="num">87</span><span class="label">Reseñas reales</span></div>
+        <div class="proof-item"><span class="num">23d</span><span class="label">Última foto subida</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIAGNÓSTICO ============ -->
+<section id="diagnostico">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Diagnóstico</div>
+      <h2>Lo que vi cuando entré a tu ficha</h2>
+      <p>Antes de proponerte nada, quiero que veas exactamente lo que yo vi. Sin exagerar, sin venderte miedo.</p>
+    </div>
+    <div class="pain-grid reveal">
+      <div class="pain-card">
+        <span class="tag">01</span>
+        <h3>Existes, pero nadie le dijo a Google qué vendes</h3>
+        <p>Tu perfil no tiene descripción, ni sitio web, ni categoría específica. Cuando alguien busca "frenos" en vez de "taller mecánico", tu negocio no siempre aparece.</p>
+      </div>
+      <div class="pain-card">
+        <span class="tag">02</span>
+        <h3>El nombre no coincide con la dirección</h3>
+        <p>En un lugar aparece "El Vijia", en otro "El Vigía". Para Google eso puede leerse como dos negocios distintos — o como ninguno confiable.</p>
+      </div>
+      <div class="pain-card">
+        <span class="tag">03</span>
+        <h3>Tienes 87 reseñas buenas, y ni una respuesta tuya</h3>
+        <p>Nadie del taller ha contestado un comentario. Ni a los clientes contentos, ni al que dejó algo confuso hace un año. Se lee como abandono, aunque el negocio esté vivo.</p>
+      </div>
+      <div class="pain-card">
+        <span class="tag">04</span>
+        <h3>Cada cliente nuevo llega por suerte</h3>
+        <p>Sin ficha completa, sin WhatsApp Business, sin web — no hay nada trabajando por ti todos los días. Todo depende de que alguien te encuentre por accidente o te recomienden de boca.</p>
+      </div>
+      <div class="pain-card">
+        <span class="tag">05</span>
+        <h3>Tu especialidad está escondida</h3>
+        <p>Estás registrado como taller genérico, no como especialista en frenos y suspensión. La persona que busca justo lo que tú haces mejor, ahora mismo, probablemente no te está encontrando.</p>
+      </div>
+    </div>
+    <p class="closer reveal">No te digo esto para criticarte. Te lo digo porque ya sé exactamente cómo resolverlo — y ya empecé.</p>
+  </div>
+</section>
+
+<!-- ============ PANORAMA / BENCHMARK ============ -->
+<section id="panorama">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Panorama</div>
+      <h2>Esto es lo que nadie está haciendo en tu categoría</h2>
+    </div>
+    <div class="stat-row reveal">
+      <div class="stat">
+        <div class="value">78%</div>
+        <div class="desc">de los talleres mexicanos tiene su ficha de Google abandonada o incompleta</div>
+      </div>
+      <div class="stat">
+        <div class="value">73%</div>
+        <div class="desc">de las búsquedas de frenos y suspensión son urgentes: "abierto ahora", "cerca de mí"</div>
+      </div>
+      <div class="stat">
+        <div class="value">89%</div>
+        <div class="desc">de esas búsquedas urgentes termina en contacto o visita antes de 24 horas</div>
+      </div>
+    </div>
+    <p class="bench-copy reveal">Revisé alrededor de <strong>12 talleres de frenos y suspensión</strong> en Zapopan y Guadalajara. Ninguno corre publicidad paga. La mayoría tiene una página de Facebook casi abandonada — entre 79 y poco más de mil seguidores, sin actividad reciente. Nadie está peleando por ese tráfico urgente que Google ya te está mandando todos los días.</p>
+    <p class="closer reveal">No estás lejos. Estás a una ficha bien armada de distancia.</p>
+  </div>
+</section>
+
+<!-- ============ YA EMPECÉ ============ -->
+<section id="trabajo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Ya empecé a trabajar en tu caso</div>
+      <h2>Esto lo puedes usar hoy, sin costo</h2>
+      <p>Esto es lo que haría en tu caso en los primeros 30 días. Te lo doy sin compromiso.</p>
+    </div>
+    <div class="work-grid reveal">
+      <div class="mock-card">
+        <div class="mock-head"><span class="mock-dot"></span><span>PROPUESTA — DESCRIPCIÓN GOOGLE BUSINESS</span></div>
+        <div class="mock-body">
+          <div class="biz">Frenos Álvarez — El Vigía</div>
+          <div class="stars">★★★★★ 4.7 · 87 reseñas</div>
+          <div class="desc-label">Puedes copiar esto directo a tu perfil</div>
+          <div class="desc-text">"Especialistas en frenos y suspensión en Zapopan. Diagnóstico claro, piezas explicadas antes de cobrarlas, y el mismo trato directo que nuestros clientes llevan recomendando desde hace años."</div>
+        </div>
+      </div>
+      <ul class="checklist">
+        <li>
+          <span class="n">→</span>
+          <p><strong>Reclama tu ficha en Google Business.</strong> El botón "Reclamar este negocio" ya está disponible — sin eso, no puedes tocar nada de lo demás.</p>
+        </li>
+        <li>
+          <span class="n">→</span>
+          <p><strong>Agrega categorías específicas.</strong> "Servicio de frenos" y "Taller de suspensión", no solo "taller mecánico" genérico.</p>
+        </li>
+        <li>
+          <span class="n">→</span>
+          <p><strong>Cierra el tema de la reseña conflictiva.</strong> Una línea profesional respondiendo al comentario de Wetlet FC resuelve eso para siempre.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EL SISTEMA ============ -->
+<section id="sistema">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">El sistema que propongo</div>
+      <h2>No te ofrezco arreglar tu Maps. Te propongo algo que trabaja aunque tú estés bajo un carro.</h2>
+    </div>
+    <div class="system-block reveal">
+      <p>La ficha optimizada es solo la entrada. Lo que realmente cambia las cosas es un sistema completo: reputación que se cuida sola, reseñas que se piden automáticamente, y una forma de que ningún cliente que te escriba se pierda entre mensajes.</p>
+      <p>No es publicidad ni "estar en redes" por estar. Es capturar la demanda urgente que ya existe en tu zona y que hoy se está yendo a otro taller — nada más porque llegó primero a su ficha.</p>
+      <div class="bio-line">
+        Trabajo como <strong>shadow operator</strong>: ayudo a negocios a escalar su presencia digital detrás de cámara, para que sean ellos quienes brillen al frente. Me formé con David Turu — participé en el lanzamiento de Paulattier como gerente del CMO — y tengo un diplomado con Benoist en habilidades de alto ingreso en negocios.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BUNDLE: ARRANQUE LOCAL ============ -->
+<section class="cta" id="bundle">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Tu paquete de arranque</div>
+      <h2>Arranque Local</h2>
+      <p class="bundle-intro">Ya platicamos de esto, Pedro — así que no te voy a repetir el diagnóstico. Solo quiero dejarte por escrito por qué lo veo como una <strong>inversión, no como un gasto</strong>: es lo que te construye los cimientos para que, cuando quieras, empieces a pagar publicidad y llenar tu WhatsApp de citas — sin empezar desde cero.</p>
+      <p class="compare-note">Para comparar: el plan ideal a largo plazo es Phantom Root — pero se paga mes con mes durante 3 meses, y el total termina siendo parecido a esto. Arranque Local te da esas mismas bases con un solo pago (o dos, si prefieres), sin compromiso mensual. Es la entrada inteligente antes de escalar.</p>
+
+      <div class="bundle-card">
+        <span class="badge">🚀 Bundle · el combo más pedido</span>
+        <div class="bundle-tag">Tier 01 completo · 3 servicios</div>
+        <h3>Arranque Local</h3>
+        <p class="desc">La base para dejar de ser invisible: te encuentran en Maps, tu Instagram convierte, y tienes un sitio propio que manda a la gente directo a tu WhatsApp.</p>
+        <ul class="bundle-list">
+          <li>Rescate y optimización de Google Maps</li>
+          <li>Cuenta de Instagram profesional con fotos de tu taller</li>
+          <li>Sitio web o landing page conectada a tu WhatsApp para agendar</li>
+        </ul>
+        <div class="price-block">
+          <div class="price-label">Pago único (o en 2 pagos)</div>
+          <div><span class="price-old">$8,680 MXN</span></div>
+          <div class="price-now">$7,630 <span class="cur">MXN</span></div>
+          <div class="price-save">Ahorras 12% vs. contratar cada servicio por separado</div>
+          <div class="price-split">Facilidad de pago para este bundle: 2 pagos de $3,815 MXN c/u</div>
+          <div class="price-vat">+ IVA · conversión aproximada, tipo de cambio del día</div>
+        </div>
+      </div>
+
+      <div class="calc reveal">
+        <div class="calc-head">
+          <h3>Antes de decidir, mira el potencial</h3>
+          <p>Mueve las opciones y compara qué tan predecibles pueden volverse tus contactos por WhatsApp según lo que actives.</p>
+        </div>
+        <div class="seg" id="calcSeg">
+          <button class="active" data-mode="0">Como estás hoy</button>
+          <button data-mode="1">Con Arranque Local</button>
+          <button data-mode="2">+ Pauta paga</button>
+        </div>
+        <div class="ads-row" id="adsRow">
+          <label>Pauta / día</label>
+          <input type="range" id="adsSlider" min="0.5" max="5" step="0.5" value="1">
+          <span class="ads-val" id="adsVal">$1.0 USD</span>
+        </div>
+        <div class="calc-results">
+          <div class="result">
+            <div class="val" id="resContacts">~15</div>
+            <div class="lbl">Contactos estimados por WhatsApp / mes</div>
+          </div>
+          <div class="result">
+            <div class="val" id="resCitas">~5</div>
+            <div class="lbl">Citas agendadas estimadas / mes</div>
+          </div>
+        </div>
+        <p class="calc-fine">Estimación ilustrativa basada en patrones típicos de negocios locales que optimizan su ficha y activan pauta segmentada por radio (10 km). No es una garantía de resultados — cada taller y cada temporada se comportan distinto. La pauta se calcula sobre un radio aproximado de 10 km alrededor de tu taller.</p>
+        <details class="calc-toggle">
+          <summary>¿Y si más adelante quisieras construir marca personal, no solo ventas?</summary>
+          <p>Una marca personal no solo atrae clientes — también atrae proveedores con mejores condiciones, posibles socios, y gente que quiera trabajar contigo cuando necesites contratar. Por lo que me has platicado, tú por ahora solo buscas ventas predecibles para tu taller, y Arranque Local es más que suficiente para eso. Esto solo lo dejo aquí por si en algún momento te interesa ir más allá.</p>
+        </details>
+      </div>
+
+      <a class="wa-btn" href="https://wa.me/522205717032?text=Hola%20Alex%2C%20ya%20decid%C3%AD%20arrancar%20con%20el%20paquete%20Arranque%20Local%20para%20mi%20taller." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.55-3.7 8.24-8.24 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.24-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.84-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.48-.01-.16 0-.43.06-.66.31s-.87.85-.87 2.08.89 2.41 1.02 2.58c.12.16 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.2-.58.2-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
+        Quiero arrancar con este bundle
+      </a>
+      <p class="final-line">Tu taller ya se ganó la confianza de <span>87 personas</span> sin ayuda de nadie. Arranque Local es lo que hace que la siguiente persona que busque frenos en Zapopan también te encuentre.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>FRENOS ÁLVAREZ · EL VIGÍA — PROPUESTA PREPARADA POR BE AI</p>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  els.forEach(el=>io.observe(el));
+
+  // ---- Calculadora de potencial ----
+  const segBtns = document.querySelectorAll('#calcSeg button');
+  const adsRow = document.getElementById('adsRow');
+  const adsSlider = document.getElementById('adsSlider');
+  const adsVal = document.getElementById('adsVal');
+  const resContacts = document.getElementById('resContacts');
+  const resCitas = document.getElementById('resCitas');
+
+  const BASE_CONTACTS = 15;      // estado actual: boca a boca / tráfico pasivo
+  const LOCAL_MULT = 3;          // Arranque Local: ficha + IG + landing optimizados
+  const ADS_PER_DOLLAR = 10;     // contactos extra estimados por cada $1 USD/día de pauta
+  const CITA_RATE = 0.35;        // % de contactos que agenda cita
+
+  let mode = 0;
+
+  function calc(){
+    let contacts = BASE_CONTACTS;
+    if(mode === 1){
+      contacts = BASE_CONTACTS * LOCAL_MULT;
+    } else if(mode === 2){
+      const budget = parseFloat(adsSlider.value);
+      contacts = (BASE_CONTACTS * LOCAL_MULT) + (budget * ADS_PER_DOLLAR);
+    }
+    const citas = Math.round(contacts * CITA_RATE);
+    resContacts.textContent = '~' + Math.round(contacts);
+    resCitas.textContent = '~' + citas;
+  }
+
+  segBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      segBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = parseInt(btn.dataset.mode, 10);
+      adsRow.classList.toggle('show', mode === 2);
+      calc();
+    });
+  });
+
+  adsSlider.addEventListener('input', ()=>{
+    adsVal.textContent = '$' + parseFloat(adsSlider.value).toFixed(1) + ' USD';
+    calc();
+  });
+
+  calc();
+</script>
+
+</body>
+</html>
